@@ -1,0 +1,14 @@
+[
+  {
+    "status": "down",
+    "_id": "5b244381502887521f07996f",
+    "name": "device2",
+    "__v": 0
+  },
+  {
+    "status": "up",
+    "_id": "5b2443f46c6a9a522b6653f6",
+    "name": "device1",
+    "__v": 0
+  }
+]

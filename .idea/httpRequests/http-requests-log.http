@@ -1,0 +1,126 @@
+GET http://localhost:3000/device
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-06-17T102429.200.json
+
+###
+
+GET http://localhost:3000/device
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-06-17T102428.200.json
+
+###
+
+GET http://localhost:3000/device
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-06-17T102427.200.json
+
+###
+
+GET http://localhost:3000/device
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-06-17T102419.200.json
+
+###
+
+GET http://localhost:3000/device
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-06-17T102417.200.json
+
+###
+
+GET http://localhost:3000/device
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-06-17T102409.200.json
+
+###
+
+GET http://localhost:3000/device
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-06-17T102408-1.200.json
+
+###
+
+GET http://localhost:3000/device
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-06-17T102408.200.json
+
+###
+
+GET http://localhost:3000/device
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-06-17T102407-1.200.json
+
+###
+
+GET http://localhost:3000/device
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-06-17T102407.200.json
+
+###
+
+GET http://localhost:3000/device
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-06-17T102406-1.200.json
+
+###
+
+GET http://localhost:3000/device
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-06-17T102406.200.json
+
+###
+
+GET http://localhost:3000/device
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-06-17T102405.200.json
+
+###
+
+GET http://localhost:3000/device
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-06-17T102402.200.json
+
+###
+
+GET http://localhost:3000/device
+Accept: */*
+Cache-Control: no-cache
+
+<> 2018-06-17T102340.200.json
+
+###
+
+GET http://localhost:8080/resources
+Accept: */*
+Cache-Control: no-cache
+
+###
+
