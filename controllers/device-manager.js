@@ -6,21 +6,20 @@ const deviceRegistry = require('../models/device-registery.js');
 const deviceManager = {};
 
 deviceManager.start = () => {
-    deviceRegistry.init()
+    client.on('connect', () => {
+        client.subscribe('device');
+        client.subscribe('device/exit');
+    });
+
+    client.on('message', deviceManager.handle);
+    return deviceRegistry.init()
         .then( (devices) => {
             for(let device of devices){
                 deviceManager.checkAlive(device);
             }
+            return true;
         });
 
-    client.on('connect', () => {
-       client.subscribe('device');
-       client.subscribe('device/exit');
-    });
-
-    client.on('message', (topic, message) => {
-       deviceManager.handle(topic, message);
-    });
 
 };
 

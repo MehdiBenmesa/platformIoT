@@ -15,7 +15,6 @@ const DeviceSchema = new Schema({
 });
 
 const DeviceModel = mongoose.model('device', DeviceSchema);
-
 const databaseManager = {};
 
 databaseManager.saveDevice = (options) => {
@@ -76,4 +75,5 @@ databaseManager.removeServiceFromDevice = (deviceName, serviceName) => {
        )
     });
 };
+
 module.exports = databaseManager;

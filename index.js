@@ -1,4 +1,5 @@
 const deviceManager = require('./controllers/device-manager.js');
+const serviceOrchestrator = require('./controllers/service-orchestrator.js');
 const mongoose = require('mongoose');
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -24,11 +25,15 @@ db.once('open', () => {
     console.log('Connection is established to the database');
 });
 
-deviceManager.start();
-
+deviceManager.start().then(() => {
+    serviceOrchestrator.start();
+});
 
 const deviceRouter = require('./routes/device-router.js');
 app.use('/device', deviceRouter);
+
+const serviceRouter = require('./routes/service-router.js');
+app.use('/service', serviceRouter);
 
 app.get('/', (req, res) => res.send('Hello World!'));
 app.listen(3000, () => console.log('Listening on port 3000!'));
