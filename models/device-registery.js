@@ -13,7 +13,7 @@ deviceRegistry.add = (device) => {
                 deviceRegistry.check(_device);
             }, (error) => {
                 throw error;
-            })
+            });
     }
 };
 
@@ -29,7 +29,7 @@ deviceRegistry.init = () => {
 
 deviceRegistry.remove = (name) => {
     return databaseManager.deleteDevice(name)
-        .then((result) => {
+        .then( (result) => {
             deviceRegistry.devices.forEach((device) => {
                 if(device.name === name) deviceRegistry.devices.delete(device);
             });
@@ -95,10 +95,8 @@ deviceRegistry.removeService = (deviceName, serviceName) => {
                         });
                 }
           }
-
       }
   }
 };
 
 module.exports = deviceRegistry;
-

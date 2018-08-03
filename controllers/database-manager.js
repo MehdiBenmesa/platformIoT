@@ -2,20 +2,69 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const DeviceSchema = new Schema({
-   name : {type: String, unique: true},
-   status : {type: String, default : 'down'},
-   services : [{
-       name: {type: String, unique: true, required: true},
+   name :{type :String, unique :true},
+   description :String,
+   status :{type :String, default :'down'},
+   services :[{
+       name :{type :String, unique :true, required :true},
+       description: String,
        params: [{
            name: String,
            paramType: String
        }],
-       returnType: String
+       returnType :String
    }]
 });
 
+const CompositeServiceSchema = new Schema({
+    name :{type :String, unique :true, required :true},
+    description :String,
+    params :[{
+        name :String,
+        paramType :String
+    }],
+    returnType :String,
+    core :String
+});
+
+const CompositeService = mongoose.model('service', CompositeServiceSchema);
 const DeviceModel = mongoose.model('device', DeviceSchema);
+
 const databaseManager = {};
+
+databaseManager.saveCompositeService = (options) => {
+  return new Promise((resolve, reject) => {
+     let service = new CompositeService(options);
+     service.save((error, service) => {
+        if(error) {
+            return reject(error);
+        }
+        resolve(service);
+     });
+  });
+};
+
+databaseManager.deleteCompositeService = (name) => {
+    return new Promise((resolve, reject) => {
+       CompositeService.deleteOne({name :name}, (error) => {
+         if ( error ) {
+             return reject(error);
+         }
+         resolve({deleted :true})
+       });
+    });
+};
+
+databaseManager.updateCompositeService = (name, options) => {
+    return new Promise((resolve, reject) => {
+        CompositeService.findOneAndUpdate({name :name}, options, {new :true} ,(error, service) => {
+            if(error) {
+                return reject(error);
+            }
+            resolve(service);
+        })
+    });
+};
 
 databaseManager.saveDevice = (options) => {
     return new Promise((resolve, reject) => {
@@ -35,7 +84,7 @@ databaseManager.deleteDevice = (name) => {
            if(error) {
                return reject(error);
            }
-           resolve({deleted: true});
+           resolve({deleted :true});
        });
     });
 };

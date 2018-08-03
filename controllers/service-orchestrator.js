@@ -1,13 +1,28 @@
 const mqtt = require('mqtt');
 const client = mqtt.connect('mqtt://localhost:1883');
 const deviceRegistry = require('../models/device-registery.js');
+const databaseManager = require('./database-manager.js');
 const serviceOrchestrator = {};
 const serviceRegistry = {};
+
+
+serviceOrchestrator.createCompositeService = (service) => {
+    return databaseManager.saveCompositeService(service)
+        .then((service) => {
+            serviceOrchestrator.buildCompositeService(service);
+            return service;
+        }, (error) => {
+            console.log(error);
+        })
+};
+
+
+
 
 serviceOrchestrator.createService = (deviceName, service) => {
     return deviceRegistry.addService(deviceName, service)
         .then((result) => {
-            serviceOrchestrator.buildService({name:deviceName}, service);
+            serviceOrchestrator.buildService({name :deviceName}, service);
             client.publish(`device/${deviceName}/service`, JSON.stringify(service));
             return result;
         });
@@ -35,7 +50,6 @@ serviceOrchestrator.start = () => {
 serviceOrchestrator.buildService = (device, service) => {
     client.subscribe(`service/${device.name}/${service.name}/up`);
     serviceRegistry[device.name][service.name] = (params) => {
-        console.log('hi');
         client.publish(`service/${device.name}/${service.name}/down`, JSON.stringify(params));
         return new Promise((resolve, reject) => {
            client.on('message', (topic, message) => {
@@ -48,12 +62,21 @@ serviceOrchestrator.buildService = (device, service) => {
     }
 };
 
+serviceOrchestrator.buildCompositeService = (service) => {
+    eval(`serviceRegistry['${service.name}'] = ${service.core}`);
+    console.log(serviceRegistry);
+};
+
 serviceOrchestrator.removeService = (device, service) => {
    return delete serviceRegistry[device.name][service.name];
 };
 
 serviceOrchestrator.invokeService = (device, service, params) => {
   return serviceRegistry[device][service](params);
+};
+
+serviceOrchestrator.getRegistry = () => {
+    return serviceRegistry;
 };
 
 module.exports = serviceOrchestrator;
