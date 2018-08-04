@@ -31,7 +31,6 @@ const CompositeService = mongoose.model('service', CompositeServiceSchema);
 const DeviceModel = mongoose.model('device', DeviceSchema);
 
 const databaseManager = {};
-
 databaseManager.saveCompositeService = (options) => {
   return new Promise((resolve, reject) => {
      let service = new CompositeService(options);

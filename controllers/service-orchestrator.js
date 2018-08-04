@@ -6,6 +6,7 @@ const serviceOrchestrator = {};
 const serviceRegistry = {};
 
 
+
 serviceOrchestrator.createCompositeService = (service) => {
     return databaseManager.saveCompositeService(service)
         .then((service) => {
@@ -33,6 +34,10 @@ serviceOrchestrator.updateCompositeService = (serviceName, service) => {
         }, (error) => {
             console.log(error);
         });
+};
+
+serviceOrchestrator.getAllCompositeServices = () => {
+    return databaseManager.getAllCompositeServices();
 };
 
 serviceOrchestrator.createService = (deviceName, service) => {

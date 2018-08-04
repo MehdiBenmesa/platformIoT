@@ -2,6 +2,14 @@ const express = require('express');
 const router = express.Router();
 const serviceOrchestrator = require('../controllers/service-orchestrator.js');
 
+
+router.get('/', (req, res) => {
+    serviceOrchestrator.getAllCompositeServices()
+        .then((services) => {
+           res.json(services);
+        });
+});
+
 router.post('/:device/:service/invoke', (req, res) => {
     serviceOrchestrator.invokeService(req.params.device, req.params.service, req.body)
         .then((result) => {

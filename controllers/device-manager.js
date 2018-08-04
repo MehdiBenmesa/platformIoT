@@ -19,8 +19,6 @@ deviceManager.start = () => {
             }
             return true;
         });
-
-
 };
 
 deviceManager.handle = (topic, message) => {
