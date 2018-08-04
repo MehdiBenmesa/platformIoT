@@ -2,19 +2,42 @@ const express = require('express');
 const router = express.Router();
 const serviceOrchestrator = require('../controllers/service-orchestrator.js');
 
-router.post('/:device/:service', (req, res) => {
+router.post('/:device/:service/invoke', (req, res) => {
     serviceOrchestrator.invokeService(req.params.device, req.params.service, req.body)
         .then((result) => {
             res.json(result);
         });
 });
 
-router.post('/composite', (req, res) => {
+
+router.post('/composite/add', (req, res) => {
    serviceOrchestrator.createCompositeService(req.body)
        .then((result) => {
           res.json(result);
        });
 });
+
+router.post('/:service/invoke', (req, res) => {
+    serviceOrchestrator.invokeCompositeService(req.params.service, req.body)
+        .then((result) => {
+            res.json(result);
+        });
+});
+
+router.put('/:service', (req, res) => {
+   serviceOrchestrator.updateCompositeService(req.params.service, req.body)
+       .then((result) => {
+           res.json(result);
+       })
+});
+
+router.delete('/:service', (req, res) => {
+   serviceOrchestrator.deleteCompositeService(req.params.service)
+       .then((result) => {
+           res.json(result);
+       });
+});
+
 router.get('/test', (req, res) => {
    let registry = serviceOrchestrator.getRegistry();
    let device1 = registry.device1;

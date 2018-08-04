@@ -66,6 +66,17 @@ databaseManager.updateCompositeService = (name, options) => {
     });
 };
 
+databaseManager.getAllCompositeServices = () => {
+    return new Promise((resolve, reject) => {
+       CompositeService.find({}, (error, services) => {
+           if( error ) {
+               return reject(error);
+           }
+           resolve(services);
+       })
+    });
+};
+
 databaseManager.saveDevice = (options) => {
     return new Promise((resolve, reject) => {
         let device = new DeviceModel(options);

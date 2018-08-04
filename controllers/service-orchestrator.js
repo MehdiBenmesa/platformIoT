@@ -16,8 +16,24 @@ serviceOrchestrator.createCompositeService = (service) => {
         })
 };
 
+serviceOrchestrator.deleteCompositeService = (serviceName) => {
+    return databaseManager.deleteCompositeService(serviceName)
+        .then((result) => {
+           delete serviceRegistry[serviceName];
+           console.log(serviceRegistry);
+           return result;
+        });
+};
 
-
+serviceOrchestrator.updateCompositeService = (serviceName, service) => {
+    return databaseManager.updateCompositeService(serviceName, service)
+        .then((service) => {
+           serviceOrchestrator.buildCompositeService(service);
+           return service;
+        }, (error) => {
+            console.log(error);
+        });
+};
 
 serviceOrchestrator.createService = (deviceName, service) => {
     return deviceRegistry.addService(deviceName, service)
@@ -27,6 +43,7 @@ serviceOrchestrator.createService = (deviceName, service) => {
             return result;
         });
 };
+
 
 serviceOrchestrator.deleteService = (deviceName, serviceName) => {
     return deviceRegistry.removeService(deviceName, serviceName)
@@ -44,6 +61,14 @@ serviceOrchestrator.start = () => {
             serviceOrchestrator.buildService(device, service);
         }
     }
+    databaseManager.getAllCompositeServices()
+        .then((services) => {
+            for(let service of services){
+                serviceOrchestrator.buildCompositeService(service);
+            }
+        }, (error) => {
+            console.log(error);
+        });
     console.log(serviceRegistry);
 };
 
@@ -73,6 +98,10 @@ serviceOrchestrator.removeService = (device, service) => {
 
 serviceOrchestrator.invokeService = (device, service, params) => {
   return serviceRegistry[device][service](params);
+};
+
+serviceOrchestrator.invokeCompositeService = (service, params) => {
+  return serviceRegistry[service](params);
 };
 
 serviceOrchestrator.getRegistry = () => {
