@@ -102,7 +102,7 @@ serviceOrchestrator.removeService = (device, service) => {
 };
 
 serviceOrchestrator.invokeService = (device, service, params) => {
-  return serviceRegistry[device][service](params);
+    return serviceRegistry[device][service](params);
 };
 
 serviceOrchestrator.invokeCompositeService = (service, params) => {

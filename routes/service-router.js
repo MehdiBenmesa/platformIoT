@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const serviceOrchestrator = require('../controllers/service-orchestrator.js');
+const dataLogger = require('../controllers/data-monitor.js');
 
 
 router.get('/', (req, res) => {
@@ -13,6 +14,13 @@ router.get('/', (req, res) => {
 router.post('/:device/:service/invoke', (req, res) => {
     serviceOrchestrator.invokeService(req.params.device, req.params.service, req.body)
         .then((result) => {
+            let log = {
+              device: req.params.device,
+              service: req.params.service,
+              input : req.body,
+              output: result
+            };
+            dataLogger.log(log);
             res.json(result);
         });
 });
@@ -28,6 +36,12 @@ router.post('/composite/add', (req, res) => {
 router.post('/:service/invoke', (req, res) => {
     serviceOrchestrator.invokeCompositeService(req.params.service, req.body)
         .then((result) => {
+            let log = {
+                service: req.params.service,
+                input : req.body,
+                output: result
+            };
+            dataLogger.log(log);
             res.json(result);
         });
 });

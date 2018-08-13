@@ -35,5 +35,8 @@ app.use('/device', deviceRouter);
 const serviceRouter = require('./routes/service-router.js');
 app.use('/service', serviceRouter);
 
+const monitorRouter = require('./routes/monitor-route.js');
+app.use('/monitor', monitorRouter);
+
 app.get('/', (req, res) => res.send('Hello World!'));
 app.listen(3000, () => console.log('Listening on port 3000!'));

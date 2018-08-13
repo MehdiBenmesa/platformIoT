@@ -27,10 +27,45 @@ const CompositeServiceSchema = new Schema({
     core :String
 });
 
+const LoggerSchema = new Schema({
+    service : String,
+    device: String,
+    date : {type: Date, default: Date.now()},
+    input: {},
+    output: {}
+});
+
 const CompositeService = mongoose.model('service', CompositeServiceSchema);
 const DeviceModel = mongoose.model('device', DeviceSchema);
+const LoggerModel = mongoose.model('log', LoggerSchema);
 
 const databaseManager = {};
+
+databaseManager.saveLog = (object) => {
+    return new Promise((resolve, reject) => {
+        let log = new LoggerModel(object);
+        log.save((error, object) => {
+            if (error) {
+                return reject(error);
+            }
+            resolve(object);
+        });
+    });
+};
+
+
+
+databaseManager.getLogs = (service, device) => {
+    return new Promise((resolve, reject) => {
+        LoggerModel.find({service, device}, (error, records) => {
+            if(error){
+                return reject(error);
+            }
+            resolve(records);
+        });
+    });
+};
+
 databaseManager.saveCompositeService = (options) => {
   return new Promise((resolve, reject) => {
      let service = new CompositeService(options);
